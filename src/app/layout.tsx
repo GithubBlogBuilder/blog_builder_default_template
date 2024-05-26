@@ -5,7 +5,6 @@ import "@/app/globals.css"
 import {RootProviders} from "@/Providers/RootProvider"
 import {NavBar} from "@/components/blocks/client/NavBar"
 import {Toaster} from "@/components/ui/sonner"
-import {EditPostButton} from "@/components/blocks/client/EditPostButton"
 const notoSansTC = Noto_Sans_TC({ subsets: ["latin"] })
 import {UserProvider} from "@/Providers/UserProvider"
 import {GithubUserModelProps} from "@/models/IssueModel";

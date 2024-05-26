@@ -13,7 +13,7 @@ function LogoButton() {
     return (
         <section>
             <Link href={'/'}>
-                <Logo/>
+                <p>『你的部落格名稱』</p>
             </Link>
         </section>
     );
