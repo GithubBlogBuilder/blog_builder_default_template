@@ -1,18 +1,18 @@
-'use server'
+'use client';
 
 import {Octokit} from '@octokit/core'
-import {cookies} from "next/headers";
 import {GithubUserModelProps} from "@/models/IssueModel";
+import Cookies from 'js-cookie';
 
 export async function getTokenFromCookie(){
-    const token =  cookies().get('access_token')
+    const token = Cookies.get("access_token");
 
-    if(token === undefined || token.value === ''){
+    if(token === undefined || token === ''){
         return undefined
     }
 
     // check token expired
-    const octokit = new Octokit({auth: token.value})
+    const octokit = new Octokit({auth: token})
     try{
         const res = await octokit.request('GET /user',{
             headers: {
@@ -28,7 +28,7 @@ export async function getTokenFromCookie(){
         console.log('token expired')
         return ''
     }
-    return token.value
+    return token
 }
 
 export async function getGithubUser(): Promise<GithubUserModelProps | null> {
@@ -54,7 +54,5 @@ export async function getGithubUser(): Promise<GithubUserModelProps | null> {
 export async function githubSignOut(){
     // clear login token
     console.log('clear token')
-    cookies().set('access_token', '', {
-        maxAge: 0
-    })
+    Cookies.set("access_token", "", { expires: 0 });
 }
