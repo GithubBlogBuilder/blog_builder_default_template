@@ -8,7 +8,6 @@ import React, { Suspense, useEffect, useState } from "react";
 import { CommentDisplayCard } from "@/components/blocks/CommentDisplayCard";
 import { NewCommentForm } from "@/components/blocks/client/NewCommentForm";
 import { MarkdownDisplay } from "@/components/blocks/MarkdownDisplay"
-import { EditPostButton, DeletePostButton } from "@/components/blocks/client/EditPostButton";
 import { IssueEntity } from "@/models/IssueModel"
 import { CommentDataModelProps } from "@/models/CommentModel";
 import { useSearchParams } from "next/navigation";
@@ -54,15 +53,6 @@ function _PostPage() {
             {
                 issueModel !== undefined && issue !== undefined ?
                     <>
-                        {
-                            <div className={"fixed grid grid-cols-1 gap-4 bottom-4 right-4 md:bottom-8 md:right-8 md:gap-2"}>
-                                <EditPostButton issueNumber={issueModel.data.number} issueEntity={{
-                                    title: issueModel.data.title,
-                                    body: issueModel.metadata.body
-                                } as IssueEntity} />
-                                <DeletePostButton issueId={issueModel.data.number} />
-                            </div>
-                        }
                         <BlogPostHeader issueData={issue}></BlogPostHeader>
                         <MarkdownDisplay source={issueModel.metadata.body} />
                         <div className={"w-full space-y-4 py-4"}>

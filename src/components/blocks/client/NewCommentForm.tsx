@@ -13,8 +13,6 @@ import {useContext} from "react"
 import {UserContext} from "@/Providers/UserProvider"
 type CommentDisplayCardProps = {
     issueId: number,
-    // author: GithubUserModelProps | null,
-
 }
 
 export function NewCommentForm({issueId}: CommentDisplayCardProps) {
