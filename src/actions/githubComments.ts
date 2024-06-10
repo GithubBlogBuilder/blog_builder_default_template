@@ -12,7 +12,7 @@ const headers = {
 export async function getAllIssueComments({issueId}: {issueId: number}): Promise<CommentDataModelProps[]> {
     try{
         // const octokit = await installationAuth()
-        const token = process.env.GTHUB_ACCESS_TOKEN as string
+        const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN as string
         const octokit = new Octokit({auth: token})
         const issue = await octokit.request('GET /repos/{owner}/{repo}/issues/{issue_number}/comments',{
             owner: process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME as string,

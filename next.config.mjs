@@ -9,6 +9,7 @@ const nextConfig = {
                 port: '',
             },
         ],
+        unoptimized: true,
     },
     output: 'export',
     transpilePackages: ['next-mdx-remote'],

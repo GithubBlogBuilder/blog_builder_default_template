@@ -29,9 +29,9 @@ export function NavBar() {
             <div className={"flex flex-row justify-end space-x-2"}>
                 <ThemeSwitcherButton/>
                 {
-                    userContext.user === null
-                        ? <OAuthButton/>
-                        : <AvatarDropdown />
+                    // userContext.user === null
+                    //     ? <OAuthButton/>
+                    //     : <AvatarDropdown />
                 }
             </div>
         </div>
