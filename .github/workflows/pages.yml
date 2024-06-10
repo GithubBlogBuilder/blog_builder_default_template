@@ -54,7 +54,11 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Setup environment
-        run: echo "BASE_URL=/${{ github.event.repository.name }}" >> .env.local
+        run: |
+          echo "BASE_URL=/${{ github.event.repository.name }}" >> .env.local
+          echo "NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME=${{ github.repository_owner }}" >> .env.local
+          echo "NEXT_PUBLIC_BLOG_REPO_NAME=${{ github.event.repository.name }}" >> .env.local
+          echo "NEXT_PUBLIC_ACCESS_TOKEN=${{ vars.TOKEN }}" >> .env.local
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
