@@ -10,14 +10,13 @@ import {
 import {
     getTokenFromCookie,
 } from "@/actions/githubOauth"
-import {Octokit} from "@octokit/core";
+import { Octokit } from "@octokit/core";
 
 // import {App} from "octokit";
 
 const headers = {
     'X-Github-Api-Version': '2022-11-28'
 }
-import { createAppAuth } from "@octokit/auth-app";
 
 export type getIssueResultProps = {
     data: issueDataModelProps[],
@@ -42,46 +41,54 @@ function hasPagination(linkHeader: string): boolean {
     return (linkHeader && linkHeader.includes(`rel=\"next\"`)) as boolean
 }
 
-export async function getAllIssue(paginationURL: string = ""): Promise<any>{
-    try{
-        console.log('token', process.env.GTHUB_ACCESS_TOKEN)
-        const octokit = new Octokit({auth: process.env.GTHUB_ACCESS_TOKEN})
+export async function getAllIssue(paginationURL: string = ""): Promise<any> {
+    const user = process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME;
+    const repo = process.env.NEXT_PUBLIC_BLOG_REPO_NAME;
+    const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
-        const issue = paginationURL.length > 0
-            ? await octokit.request('GET '+paginationURL, {headers: headers})
-            : await octokit.request('GET /repos/{owner}/{repo}/issues',{
+    try {
+        const octokit = new Octokit({ auth: token })
+        const issues = paginationURL.length > 0
+            ? await octokit.request('GET ' + paginationURL, { headers: headers })
+            : await octokit.request('GET /repos/{owner}/{repo}/issues', {
                 owner: process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME as string,
                 repo: process.env.NEXT_PUBLIC_BLOG_REPO_NAME as string,
                 per_page: 10,
                 headers: headers,
             })
 
-        // console.log('issue', issue)
+        
+        // const response = await fetch(`http://cutiemango.csie.io:5000/api/issues?user=${user}&repo=${repo}&token=${token}`, {
+        //     method: "GET",
+        //     mode: "no-cors",
+        // });
+        // console.log(response);
+        // const issues = await response.json();
 
-        const result = issue.data.map((item: any) => {
+        const result = issues.data.map((item: any) => {
             return {
                 ...item
             }
         })
         // console.log('result', result)
-        const link = issue.headers.link as string
+        const link = issues.headers.link as string
         return JSON.parse(JSON.stringify({
             data: JSON.parse(JSON.stringify(result)),
             next: hasPagination(link) ? getPagingURL(link) : undefined
         }))
     } catch (e) {
-        console.log('error', e)
+        console.log(e);
         return {} as getIssueResultProps
     }
 }
 
 
 // gitHub app action
-export async function getIssueById({issueId}: {issueId: number}): Promise<issueDataModelProps> {
-    try{
+export async function getIssueById({ issueId }: { issueId: number }): Promise<issueDataModelProps> {
+    try {
         // const octokit = await installationAuth()
-        const token = process.env.GTHUB_ACCESS_TOKEN as string
-        const octokit = new Octokit({auth: token})
+        const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN as string
+        const octokit = new Octokit({ auth: token })
         const res = await octokit.request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
             owner: process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME as string,
             repo: process.env.NEXT_PUBLIC_BLOG_REPO_NAME as string,
@@ -103,10 +110,10 @@ type createIssueProps = {
     token: string,
     issueEntity: IssueEntity
 }
-async function createIssue({token, issueEntity}: createIssueProps): Promise<issueDataModelProps> {
-    try{
+async function createIssue({ token, issueEntity }: createIssueProps): Promise<issueDataModelProps> {
+    try {
         // const token = await getTokenFromCookie()
-        const octokit = new Octokit({auth: token})
+        const octokit = new Octokit({ auth: token })
 
         const res = await octokit.request('POST /repos/{owner}/{repo}/issues', {
             owner: process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME as string,
@@ -116,7 +123,7 @@ async function createIssue({token, issueEntity}: createIssueProps): Promise<issu
             assignee: issueEntity.assignee,
             headers: headers
         })
-        const newIssue = {...res.data} as issueDataModelProps
+        const newIssue = { ...res.data } as issueDataModelProps
         console.log('newIssue', newIssue)
         return newIssue
     }
@@ -128,7 +135,7 @@ async function createIssue({token, issueEntity}: createIssueProps): Promise<issu
 
 export async function createNewIssue(issueEntity: IssueEntity): Promise<issueDataModelProps> {
     const token = await getTokenFromCookie()
-    if(token === undefined){
+    if (token === undefined) {
         throw new Error('token is undefined')
     }
     return createIssue({
@@ -138,20 +145,20 @@ export async function createNewIssue(issueEntity: IssueEntity): Promise<issueDat
 }
 
 
-export async function deleteIssue({issueId}: {issueId: number}){
+export async function deleteIssue({ issueId }: { issueId: number }) {
 
-    const res = await updateIssue({issueId: issueId, issueEntity: {} as IssueEntity, open: false})
+    const res = await updateIssue({ issueId: issueId, issueEntity: {} as IssueEntity, open: false })
 
 }
-export async function updateIssue({issueId, issueEntity, open=true}: {issueId: number, issueEntity: IssueEntity, open: boolean}): Promise<issueDataModelProps> {
+export async function updateIssue({ issueId, issueEntity, open = true }: { issueId: number, issueEntity: IssueEntity, open: boolean }): Promise<issueDataModelProps> {
 
     const token = await getTokenFromCookie()
-    if(token === undefined){
+    if (token === undefined) {
         throw new Error('token is undefined')
     }
 
-    try{
-        const octokit = new Octokit({auth: token})
+    try {
+        const octokit = new Octokit({ auth: token })
         const res = await octokit.request('PATCH /repos/{owner}/{repo}/issues/{issue_number}', {
             owner: process.env.NEXT_PUBLIC_AUTHOR_GITHUB_USERNAME as string,
             repo: process.env.NEXT_PUBLIC_BLOG_REPO_NAME as string,

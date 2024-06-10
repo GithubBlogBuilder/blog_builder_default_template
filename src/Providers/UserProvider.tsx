@@ -1,7 +1,7 @@
 'use client'
-import React, {createContext, useEffect, useState, useMemo, useCallback, useTransition} from "react";
-import {GithubUserModelProps} from "@/models/IssueModel";
-import {getGithubUser} from "@/actions/githubOauth";
+import React, { createContext, useEffect, useState, useMemo, useCallback, useTransition } from "react";
+import { GithubUserModelProps } from "@/models/IssueModel";
+import { getGithubUser } from "@/actions/githubOauth";
 
 interface ProviderProps {
     children: React.ReactNode,
@@ -15,13 +15,13 @@ type UserContextProps = {
 
 const defaultUserContext: UserContextProps = {
     user: null,
-    setUserContext: () => {}
+    setUserContext: () => { }
 }
 export const UserContext = createContext<UserContextProps>(defaultUserContext)
 
-export function UserProvider({children, user}: ProviderProps) {
+export function UserProvider({ children, user }: ProviderProps) {
 
-    const [userContext, setUserContext] = useState<UserContextProps >({
+    const [userContext, setUserContext] = useState<UserContextProps>({
         ...defaultUserContext,
         user: user
     })
@@ -42,4 +42,16 @@ export function UserProvider({children, user}: ProviderProps) {
             {children}
         </UserContext.Provider>
     )
+}
+
+export function GetUserProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+    const [user, setUser] = useState<GithubUserModelProps | null>(null);
+
+    getGithubUser()
+        .then((value) => setUser(value))
+        .catch((e) => console.log('user not found'));
+
+    return <UserProvider user={user}>
+        {children}
+    </UserProvider>
 }

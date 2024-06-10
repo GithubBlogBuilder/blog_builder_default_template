@@ -1,5 +1,5 @@
-import {IssueTag} from "@/components/blocks/TagChip";
-import {metadata} from "@/app/layout";
+import { IssueTag } from "@/components/blocks/TagChip";
+import { metadata } from "@/app/layout";
 
 export type IssueEntity = {
     title: string,
@@ -39,10 +39,10 @@ export type IssueLabelModelProps = {
     default: boolean
 }
 
-export class IssueModel{
+export class IssueModel {
     data: issueDataModelProps
-    static parseMetaDate(body: string | null){
-        if (body === null || !body){
+    static parseMetaDate(body: string | null) {
+        if (body === null || !body) {
             return {
                 title: null,
                 subtitle: null,
@@ -52,7 +52,7 @@ export class IssueModel{
         }
         const data = body.split('-----', 2)
 
-        if (data.length < 2){
+        if (data.length < 2) {
             // no metadata
             return {
                 title: null,
@@ -67,7 +67,7 @@ export class IssueModel{
             .split('\n')
             .map((line) => {
                 const [key, value] = line.split('::')
-                if(key.trim().endsWith('image')){
+                if (key.trim().endsWith('image')) {
                     const regex = /!\[.*?]\((.*?)\s*("(?:.*[^"])")?\s*\)/g;
                     const match = regex.exec(value.trim())
                     return {
@@ -75,7 +75,7 @@ export class IssueModel{
                     }
                 }
                 return {
-                    [ key.trim() ]: value.trim()
+                    [key.trim()]: value.trim()
                 }
             }).reduce((acc, line) => {
                 return {
@@ -100,20 +100,20 @@ export class IssueModel{
         cover_image: string | null,
         body: string,
     }
-    constructor(issueData: issueDataModelProps){
+    constructor(issueData: issueDataModelProps) {
         this.metadata = IssueModel.parseMetaDate(issueData.body)
         this.data = issueData
         // console.log('metadata', this.metadata)
     }
 
-    get title(){
+    get title() {
         return this.metadata.title ?? this.data.title
     }
-    get subtitle(){
+    get subtitle() {
         return this.metadata.subtitle ?? ''
     }
 
-    get cover_image(){
+    get cover_image() {
         return this.metadata.cover_image
     }
 
