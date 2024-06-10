@@ -8,7 +8,7 @@ export default function CallbackPage() {
 
     return (
         <Suspense>
-            <_CallbackPage/>
+            <_CallbackPage />
         </Suspense>
     );
 }
@@ -43,8 +43,9 @@ function _CallbackPage() {
             console.log('set token to cookies', accessToken);
             Cookies.set('access_token', accessToken);
             Cookies.set('refresh_token', refreshToken);
+
+            router.push("/");
         }));
-        router.push("/");
     }, [router, params]);
 
     return (
