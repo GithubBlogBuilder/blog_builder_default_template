@@ -50,10 +50,9 @@ export function IssueCoverCard({ issue }: { issue: issueDataModelProps }) {
         <Card className={"overflow-hidden max-w-2xl max-h-unit-3xl"}>
             <Link href={`/post?id=${issueModel.data.number}`}>
                 <CardHeader >
-                    <CoverImage imageURL={issueModel.cover_image} />
+                    <GithubAvatar author={issueModel.data.user} />
                 </CardHeader>
                 <CardContent className={"flex flex-col w-full flex-grow justify-start items-start gap-y-2"}>
-                    <GithubAvatar author={issueModel.data.user} />
                     <section>
                         <div className={"text-lg font-semibold"}>{issueModel.title}</div>
                         <div className={"text-lg font-light"}>{issueModel.subtitle}</div>
@@ -71,10 +70,10 @@ export function BlogPostHeader({ issueData }: { issueData: issueDataModelProps }
 
     return (
         <div className={"w-full flex flex-col items-center"}>
-            <CoverImage imageURL={issueModel.cover_image} />
+            {/* <CoverImage imageURL={issueModel.cover_image} /> */}
             <div className={"w-full flex flex-col py-5"}>
                 <GithubAvatar author={issueModel.data.user} />
-                <section>
+                <section className="mt-10">
                     <div className={"text-3xl font-semibold"}>{issueModel.title}</div>
                     <div className={"text-2xl font-light"}>{issueModel.subtitle}</div>
                 </section>
