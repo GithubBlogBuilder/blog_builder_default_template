@@ -1,5 +1,5 @@
 'use client';
-import { Logo, ThemeSwitcherButton } from "@/components/blocks/client/ThemeToggleUI";
+import { ThemeSwitcher } from "@/components/blocks/client/ThemeToggleUI";
 import { OAuthButton } from "@/components/blocks/client/OauthButton";
 import React, { useContext } from "react";
 import Link from "next/link";
@@ -73,7 +73,7 @@ export function NavBar() {
                         />
                     </div>
                     <div className={"flex flex-row justify-end space-x-2"}>
-                        <ThemeSwitcherButton />
+                        <ThemeSwitcher />
                         {
                             // userContext.user === null
                             //     ? <OAuthButton/>

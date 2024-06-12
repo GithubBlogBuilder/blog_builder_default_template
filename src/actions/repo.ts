@@ -32,9 +32,14 @@ export interface BlogProps {
   }
   
 
-export async function getRepo(): Promise<BlogProps> {
+export async function getRepo(): Promise<BlogProps | null> {
     const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
-    const response = await fetch("https://blog-builder-theta.vercel.app/api/repo?token=" + token);
 
-    return await response.json();
+    try {
+        const response = await fetch("https://blog-builder-theta.vercel.app/api/repo?token=" + token);
+        if (response.status >= 400) return null;
+        return await response.json();
+    } catch (error) {
+        return null;
+    }
 }
