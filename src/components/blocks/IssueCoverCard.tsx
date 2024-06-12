@@ -74,10 +74,10 @@ export function BlogPostHeader({ issueData }: { issueData: issueDataModelProps }
             <div className={"w-full flex flex-col py-5"}>
                 <GithubAvatar author={issueModel.data.user} />
                 <section className="mt-10">
-                    <div className={"text-3xl font-semibold"}>{issueModel.title}</div>
+                    <div className={"text-5xl font-bold"}>{issueModel.title}</div>
                     <div className={"text-2xl font-light"}>{issueModel.subtitle}</div>
                 </section>
-                <LabelsWrapper labels={issueModel.data.labels} />
+                {/* <LabelsWrapper labels={issueModel.data.labels} /> */}
             </div>
         </div>
     )
