@@ -14,9 +14,9 @@ function LogoButton({ blogName, avatarUrl }: { blogName: string, avatarUrl: stri
     // redirect to home page
     const homePage = '/'
     return (
-        <section>
+        <section className="h-full">
             <Link href={'/'}>
-                <div className="flex items-center">
+                <div className="flex items-center h-full">
                     <img
                         className="size-8 me-4 rounded-full"
                         src={avatarUrl}
@@ -54,23 +54,25 @@ export function NavBar() {
     const pathname = usePathname();
 
     const isRoot = pathname === "/";
-    
+
     const medias = repoContext.repo !== null
         ? Object.entries(repoContext.repo!.blogConfig.socialMedia)
             .filter(([key, value]) => value !== "")
-            .map(([key, value]): SocialMedia => ({name: key, url: value, icon: brandsDict[key]}))
+            .map(([key, value]): SocialMedia => ({ name: key, url: value, icon: brandsDict[key] }))
         : [];
 
     return (
-        <div className={"flex flex-row justify-center bg-fixed bg-center w-screen"} style={{ backgroundImage: "url(/cover.jpg)" }}>
-            <div className="flex flex-col w-[90%] min-w-2xl max-w-5xl">
-                <div className="w-full flex flex-row justify-between py-4">
-                    <LogoButton
-                        blogName={repoContext.repo?.blogConfig.blogName ?? ""}
-                        avatarUrl={repoContext.repo?.githubUser.avatarUrl ?? ""}
-                    />
+        <div className={"flex flex-col items-center bg-fixed bg-center w-screen"} style={{ backgroundImage: "url(/cover.jpg)" }}>
+            <div className="flex flex-row justify-center w-full backdrop-blur-md">
+                <div className="w-[90%] min-w-2xl max-w-5xl flex flex-row justify-between py-4">
+                    <div className="text-white h-full">
+                        <LogoButton
+                            blogName={repoContext.repo?.blogConfig.blogName ?? ""}
+                            avatarUrl={repoContext.repo?.githubUser.avatarUrl ?? ""}
+                        />
+                    </div>
                     <div className={"flex flex-row justify-end space-x-2"}>
-                        {/* <ThemeSwitcherButton /> */}
+                        <ThemeSwitcherButton />
                         {
                             // userContext.user === null
                             //     ? <OAuthButton/>
@@ -78,22 +80,24 @@ export function NavBar() {
                         }
                     </div>
                 </div>
+            </div>
+            <div className="flex flex-col w-[90%] min-w-2xl max-w-5xl">
                 {
                     isRoot &&
                     <div className="flex flex-col items-start my-20 gap-5">
                         <div className="bg-white rounded-md text-black py-1 px-2 font-bold">
                             {repoContext.repo?.blogConfig.blogName ?? ""}
                         </div>
-                        <h1 className="text-6xl font-bold">
+                        <h1 className="text-6xl font-bold text-white">
                             {repoContext.repo?.blogConfig.blogHeadline ?? ""}
                         </h1>
-                        <h2 className="text-2xl font-semibold">
+                        <h2 className="text-2xl font-semibold text-white">
                             {repoContext.repo?.blogConfig.blogDescription ?? ""}
                         </h2>
                         <div className="flex flex-row gap-3">
                             {
                                 medias.map((media) => (
-                                    <Link href={media.url} className="flex flex-row items-center rounded-md py-1 px-2 bg-gray-600 bg-opacity-40 gap-2">
+                                    <Link href={media.url} className="flex flex-row items-center rounded-md py-1 px-2 bg-gray-600 bg-opacity-40 gap-2 text-white">
                                         <FontAwesomeIcon icon={media.icon} />
                                         <p>{media.name}</p>
                                     </Link>
