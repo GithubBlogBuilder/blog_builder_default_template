@@ -54,7 +54,7 @@ export function NavBar() {
     const pathname = usePathname();
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
-    const isRoot = pathname === (baseUrl === "" ? "/" : baseUrl);
+    const isRoot = pathname === "/";
 
     const medias = repoContext.repo !== null
         ? Object.entries(repoContext.repo!.blogConfig.socialMedia)
