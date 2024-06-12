@@ -58,7 +58,7 @@ export function NavBar() {
 
     const medias = repoContext.repo !== null
         ? Object.entries(repoContext.repo!.blogConfig.socialMedia)
-            .filter(([key, value]) => value !== "")
+            .filter(([key, value]) => (value ?? "") !== "")
             .map(([key, value]): SocialMedia => ({ name: key, url: value, icon: brandsDict[key] }))
         : [];
 
