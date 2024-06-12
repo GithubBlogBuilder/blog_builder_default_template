@@ -53,6 +53,7 @@ export function NavBar() {
     const repoContext = useContext(RepoContext);
     const pathname = usePathname();
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "";
     const isRoot = pathname === "/";
 
     const medias = repoContext.repo !== null
@@ -62,7 +63,7 @@ export function NavBar() {
         : [];
 
     return (
-        <div className={"flex flex-col items-center bg-fixed bg-center w-screen"} style={{ backgroundImage: "url(/cover.jpg)" }}>
+        <div className={"flex flex-col items-center bg-fixed bg-center w-screen"} style={{ backgroundImage: `url(${baseUrl}/cover.jpg)` }}>
             <div className="flex flex-row justify-center w-full backdrop-blur-md">
                 <div className="w-[90%] min-w-2xl max-w-5xl flex flex-row justify-between py-4">
                     <div className="text-white h-full">
