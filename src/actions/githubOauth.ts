@@ -35,7 +35,7 @@ export async function getTokenFromCookie() {
 export async function getGithubUser(): Promise<GithubUserModelProps | null> {
     var token = await getTokenFromCookie();
     if (token === undefined || token?.length === 0) {
-        token = process.env.GITHUB_ACCESS_TOKEN;
+        token = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
         if (token === undefined || token?.length === 0) {
             throw new Error('token not found')
         }

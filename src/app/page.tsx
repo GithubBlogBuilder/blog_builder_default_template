@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getAllIssue } from "@/actions/githubIssue"
 import { IssueCoverCard } from "@/components/blocks/IssueCoverCard"
 import { UserProvider } from "@/Providers/UserProvider"
 import { GithubUserModelProps } from "@/models/IssueModel";
 import { IssueDisplayList } from "@/components/blocks/client/IssueDisplayList";
 import { NavBar } from "@/components/blocks/client/NavBar";
+import { RepoContext } from '@/Providers/RepoProvider';
 
 export default function Home() {
 
@@ -16,11 +17,10 @@ export default function Home() {
         getAllIssue().then((payload) => setFetchRes(payload));
     }, []);
 
+    const repoContext = useContext(RepoContext)
+
     return (
         <div className={"p-6"}>
-            {/* <div>
-                {JSON.stringify(fetchRes)}
-            </div> */}
             {
                 fetchRes !== undefined ?
                     <IssueDisplayList issueData={fetchRes.data} nextURL={fetchRes.next} />
