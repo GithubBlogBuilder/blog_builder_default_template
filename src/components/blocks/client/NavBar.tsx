@@ -97,7 +97,7 @@ export function NavBar() {
                         <div className="flex flex-row gap-3">
                             {
                                 medias.map((media) => (
-                                    <Link href={media.url} className="flex flex-row items-center rounded-md py-1 px-2 bg-gray-600 bg-opacity-40 gap-2 text-white">
+                                    <Link href={media.url} key={media.name} className="flex flex-row items-center rounded-md py-1 px-2 bg-gray-600 bg-opacity-40 gap-2 text-white">
                                         <FontAwesomeIcon icon={media.icon} />
                                         <p>{media.name}</p>
                                     </Link>
