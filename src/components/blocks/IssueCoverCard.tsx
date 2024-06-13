@@ -57,7 +57,10 @@ export function IssueCoverCard({ issue }: { issue: issueDataModelProps }) {
                         <div className={"text-lg font-semibold"}>{issueModel.title}</div>
                         <div className={"text-lg font-light"}>{issueModel.subtitle}</div>
                     </section>
-                    {/* <LabelsWrapper labels={issueModel.data.labels ?? []} /> */}
+                    {
+                        (issueModel.data.labels ?? []).length > 0 &&
+                        <LabelsWrapper labels={issueModel.data.labels ?? []} />
+                    }
                 </CardContent>
             </Link>
         </Card>
@@ -77,7 +80,10 @@ export function BlogPostHeader({ issueData }: { issueData: issueDataModelProps }
                     <div className={"text-5xl font-bold"}>{issueModel.title}</div>
                     <div className={"text-2xl font-light"}>{issueModel.subtitle}</div>
                 </section>
-                {/* <LabelsWrapper labels={issueModel.data.labels} /> */}
+                {
+                    (issueModel.data.labels ?? []).length > 0 &&
+                    <LabelsWrapper labels={issueModel.data.labels ?? []} />
+                }
             </div>
         </div>
     )
